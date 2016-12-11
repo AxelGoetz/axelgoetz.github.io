@@ -1,0 +1,28 @@
+<footer>
+  <div class="social-media">
+    {% if site.email %}
+      <a href="mailto:{{ site.email }}" title="Email me">
+        <i class="icon fa fa-envelope-o" aria-hidden="true"></i>
+      </a>
+    {% endif %}
+
+    {% if site.github_username %}
+      <a href="https://github.com/{{ site.github_username }}" title="Github">
+        <i class="icon fa fa-github-square" aria-hidden="true"></i>
+      </a>
+    {% endif %}
+
+    {% if site.linkedin_url %}
+      <a href="{{ site.linkedin_url }}" title="LinkedIn">
+        <i class="icon fa fa-linkedin-square" aria-hidden="true"></i>
+      </a>
+    {% endif %}
+
+    {% if site.facebook_url %}
+    <a href="{{ site.facebook_url }}" title="Facebook">
+      <i class="icon fa fa-facebook-square" aria-hidden="true"></i>
+    </a>
+    {% endif %}
+
+  </div>
+</footer>

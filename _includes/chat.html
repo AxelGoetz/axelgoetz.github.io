@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="header">
+    <div class="user">
+      <img src="{{ "/assets/images/profile-picture.png" | prepend: site.baseurl }}" alt="Profile Picture">
+      <div class="user-info">
+        <span class="username">Axel's Personal Assistant</span>
+        <span class="last-seen">last seen today at 16.42</span>
+      </div>
+    </div>
+    <div class="center-vertically">
+      <i id="menu" class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="chat-container">
+  </div>
+  <div class="input">
+    <div class="center-vertically">
+      <i id="emoji" class="fa fa-smile-o" aria-hidden="true"></i>
+    </div>
+    <div class="input-container center-vertically">
+      <div id="input-placeholder">Type a message...</div>
+      <div id="input-text" contenteditable="true" data-tab="1" dir="auto" spellcheck="true"></div>
+    </div>
+    <div class="center-vertically">
+      <i class="fa fa-paper-plane" aria-hidden="true"></i>
+    </div>
+  </div>
+</div>
