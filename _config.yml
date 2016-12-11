@@ -1,0 +1,26 @@
+title: Axel Goetz
+author: Axel Goetz
+email: axel.goetz@hotmail.com
+description: Axel Goetz' personal website.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://agoetz.me" # the base hostname & protocol for your site, e.g. http://example.com
+timezone: "Europe/London"
+
+
+github_username: AxelGoetz
+
+facebook_url: https://www.facebook.com/axel.goetz.9
+linkedin_url: https://www.linkedin.com/in/axel-goetz-09427598
+
+# Build settings
+markdown: kramdown
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - CNAME
+  - node_modules
+  - package.json
+
+gems:
+  - jekyll-feed
