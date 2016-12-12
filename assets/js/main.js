@@ -8,6 +8,7 @@ init();
 function init() {
   initInput();
   initButtons();
+  initLastSeen();
   beginConversation();
 }
 
@@ -31,6 +32,21 @@ function initButtons() {
     checkVisibilityPlaceHolder.call(inputText);
     scrollToBottom();
   };
+}
+
+function initLastSeen() {
+  var now = new Date();
+  var h = now.getHours();
+  var m = now.getMinutes();
+  var text = "last seen today at ";
+  if(h < 10) text += "0";
+  text += h + ":";
+  if(m < 10) text += "0";
+  text += m;
+
+  document.getElementById('last-seen').innerHTML = text;
+
+  setTimeout(initLastSeen, 10000);
 }
 
 function checkVisibilityPlaceHolder() {
