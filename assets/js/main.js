@@ -116,6 +116,7 @@ function beginConversation() {
   } else if(id === 1) {
     message = "I'm here to guide you around so if there is anything you need, just let me know!";
     message += "</br>To get you started, here are some of the things that I can do:";
+    message += getHelpMessage();
     animateResponse(2000);
   } else {
     document.getElementById("input-text").setAttribute('contenteditable', true);
@@ -206,6 +207,12 @@ function getResponse() {
   var result = JSON.parse(this.xhr.responseText);
   var message = result.result.fulfillment.speech;
 
+  if(message == "help") {
+    message = "Are you lost? No worries I'll help!</br>";
+    message += "You can do all of the following:</br>";
+    message += getHelpMessage();
+  }
+
   var elem = document.getElementById(this.id);
   elem.getElementsByClassName("chat-message")[0].innerHTML = message;
   elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
@@ -214,6 +221,8 @@ function getResponse() {
   elem.getElementsByClassName("fa-check")[0].style = "color: #5995f7;";
 
   id++;
+
+  scrollToBottom();
 }
 
 function setResponse(text) {
@@ -266,4 +275,18 @@ function createQuery(method, url) {
     xhr = null;
   }
   return xhr;
+}
+
+// ---------------------------------------
+// Generate messages
+
+function getHelpMessage() {
+  var message = '<div class="help"><ul>';
+  message += '<li>I could tell you things about Axel: What university he goes to, where he lives etc.</li>';
+  message += '<li>I know how to contact him or links to his Github and social media.</li>';
+  message += "<li>If you want, I can show you some of Axel's open source projects.</li>";
+  message += "<li>And many other features that you will probably never use.</li>";
+  message += "<li>Finally, if you're ever lost, just ask for <strong>help</strong></li>";
+  message += "</ul></div>";
+  return message;
 }
