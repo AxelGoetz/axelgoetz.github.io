@@ -123,7 +123,10 @@ function getMessage(text, id, isLeft, includeMeta) {
 function getMeta(includeTag) {
   var message = '<div class="meta-data"><div class="chat-time">';
   var date = new Date();
-  message += date.getHours() + ':' + date.getMinutes() + '</div>';
+  if(date.getHours() < 10) message += "0";
+  message += date.getHours() + ':';
+  if(date.getMinutes() < 10) message += "0";
+  message += date.getMinutes() + '</div>';
   if(includeTag) {
     message += '<i class="fa fa-check" aria-hidden="true"></i>';
   }
