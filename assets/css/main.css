@@ -137,21 +137,26 @@ html, body {
   height: 100%;
   width: 100%;
 
-  display: flex;
+  /*display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: flex-start;*/
 
   background-color: #4c5a70;
+
+  overflow-y: auto;
 }
 
 .message-wrapper {
-  padding-left: 3%;
-  padding-right: 3%;
+  padding-left: 1%;
+  padding-right: 1%;
 
-  margin-bottom: 6px;
-  margin-top: 6px;
+  margin-bottom: 3px;
+  margin-top: 12px;
   min-height: 30px;
+  min-width: 97%;
+
+  float: left;
 }
 
 .chat-bubble {

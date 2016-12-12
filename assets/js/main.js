@@ -16,6 +16,7 @@ function initInput() {
 
   inputText.addEventListener('onclick', checkVisibilityPlaceHolder);
   inputText.addEventListener('keyup', keyUpEvent);
+  inputText.addEventListener('keydown', keyDownEvent);
 }
 
 function initButtons() {
@@ -26,6 +27,7 @@ function initButtons() {
     sendMessage(text);
     document.getElementById('input-text').innerHTML = "";
     checkVisibilityPlaceHolder.call(inputText);
+    scrollToBottom();
   };
 }
 
@@ -48,8 +50,18 @@ function keyUpEvent(e) {
     text = text.substring(0, text.length - 15);
     sendMessage(text);
     inputText.innerHTML = "";
+
+    scrollToBottom();
   }
   checkVisibilityPlaceHolder.call(this);
+}
+
+function keyDownEvent(e) {
+  var code = (e.keyCode ? e.keyCode : e.which);
+  if(code == 13) { // Enter
+    return false;
+  }
+  return true;
 }
 
 function sendMessage(text) {
@@ -139,4 +151,8 @@ function getLoading() {
   var message = '<div class="loading"><div class="loading-dot"></div>';
   message += '<div class="loading-dot"></div><div class="loading-dot"></div></div>';
   return message;
+}
+
+function scrollToBottom() {
+  chatContainer.scrollTop = chatContainer.scrollHeight;
 }
