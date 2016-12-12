@@ -7,6 +7,7 @@ init();
 
 function init() {
   initInput();
+  initButtons();
   beginConversation();
 }
 
@@ -14,7 +15,18 @@ function initInput() {
   var inputText = document.getElementById('input-text');
 
   inputText.addEventListener('onclick', checkVisibilityPlaceHolder);
-  inputText.addEventListener('keyup', checkVisibilityPlaceHolder);
+  inputText.addEventListener('keyup', keyUpEvent);
+}
+
+function initButtons() {
+  var sendButton = document.getElementById('send-button');
+  sendButton.onclick = function() {
+    var inputText = document.getElementById('input-text');
+    var text = inputText.innerHTML;
+    sendMessage(text);
+    document.getElementById('input-text').innerHTML = "";
+    checkVisibilityPlaceHolder.call(inputText);
+  };
 }
 
 function checkVisibilityPlaceHolder() {
@@ -23,6 +35,29 @@ function checkVisibilityPlaceHolder() {
     placeholder.style.visibility = 'hidden';
   } else {
     placeholder.style.visibility = 'visible';
+  }
+}
+
+function keyUpEvent(e) {
+  var code = (e.keyCode ? e.keyCode : e.which);
+  if(code == 13) { // Enter
+    var inputText = document.getElementById('input-text');
+    var text = inputText.innerHTML;
+
+    // Get rid of enter
+    text = text.substring(0, text.length - 15);
+    sendMessage(text);
+    inputText.innerHTML = "";
+  }
+  checkVisibilityPlaceHolder.call(this);
+}
+
+function sendMessage(text) {
+  text = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+  // Checking for whitespace
+  if(/\S/.test(text) && text != "&lt;div&gt;&lt;br&gt;&lt;/div&gt;") {
+    chatContainer.innerHTML += getMessage(text, id, false, true);
   }
 }
 
