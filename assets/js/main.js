@@ -1,7 +1,7 @@
 var id = 0;
 var message = "";
-var currentFunction;
 var chatContainer = document.getElementById('chat-container');
+var ACCESSTOKEN = 'e3fa11a3a2e34cdd91dc67dc7a947e56';
 
 init();
 
@@ -17,13 +17,15 @@ function initInput() {
   inputText.addEventListener('onclick', checkVisibilityPlaceHolder);
   inputText.addEventListener('keyup', keyUpEvent);
   inputText.addEventListener('keydown', keyDownEvent);
+
+  inputText.setAttribute('contenteditable', false); // Disable until beginConversation is done
 }
 
 function initButtons() {
   var sendButton = document.getElementById('send-button');
   sendButton.onclick = function() {
     var inputText = document.getElementById('input-text');
-    var text = inputText.innerHTML;
+    var text = inputText.innerText;
     sendMessage(text);
     document.getElementById('input-text').innerHTML = "";
     checkVisibilityPlaceHolder.call(inputText);
@@ -44,10 +46,8 @@ function keyUpEvent(e) {
   var code = (e.keyCode ? e.keyCode : e.which);
   if(code == 13) { // Enter
     var inputText = document.getElementById('input-text');
-    var text = inputText.innerHTML;
+    var text = inputText.innerText;
 
-    // Get rid of enter
-    text = text.substring(0, text.length - 15);
     sendMessage(text);
     inputText.innerHTML = "";
 
@@ -65,11 +65,12 @@ function keyDownEvent(e) {
 }
 
 function sendMessage(text) {
-  text = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  var newText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   // Checking for whitespace
-  if(/\S/.test(text) && text != "&lt;div&gt;&lt;br&gt;&lt;/div&gt;") {
-    chatContainer.innerHTML += getMessage(text, id, false, true);
+  if(/\S/.test(newText) && newText != "&lt;div&gt;&lt;br&gt;&lt;/div&gt;") {
+    chatContainer.innerHTML += getMessage(newText, id, false, true);
+    setResponse(text);
   }
 }
 
@@ -83,7 +84,7 @@ function beginConversation() {
     message += "</br>To get you started, here are some of the things that I can do:";
     animateResponse(2000);
   } else {
-    currentFunction = null;
+    document.getElementById("input-text").setAttribute('contenteditable', true);
   }
 }
 
@@ -99,7 +100,7 @@ function replaceLoading() {
   elem.getElementsByClassName("chat-message")[0].innerHTML = message;
   elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
   id++;
-  currentFunction();
+  beginConversation();
 }
 
 /**
@@ -155,4 +156,76 @@ function getLoading() {
 
 function scrollToBottom() {
   chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+// ---------------------------------------
+// Respond to queries
+
+function animateLoading(id) {
+  var loading = getLoading();
+  var loadingMessage = getMessage(loading, id, true, false);
+  chatContainer.innerHTML += loadingMessage;
+}
+
+function getResponse() {
+  // TODO: Query website for appropriate response
+  var result = JSON.parse(this.xhr.responseText);
+  var message = result.result.fulfillment.speech;
+
+  var elem = document.getElementById(this.id);
+  elem.getElementsByClassName("chat-message")[0].innerHTML = message;
+  elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
+  id++;
+}
+
+function setResponse(text) {
+  id++;
+  animateLoading(id);
+  sendQuery(text, id);
+}
+
+// ---------------------------------------
+// Query API
+
+function sendQuery(text, id) {
+  var url = "https://api.api.ai/v1/query?v=20150910";
+  var xhr = createQuery("POST", url);
+  if (!xhr) {
+    // TODO: Cannot make query so need to set a response
+    return;
+  }
+
+  xhr.setRequestHeader("Authorization", "Bearer " + ACCESSTOKEN);
+  xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+
+  this.xhr = xhr;
+  this.id = id;
+
+  xhr.onload = getResponse.bind(this);
+  xhr.onerror = function() {
+    console.log('Failed to make request');
+  };
+
+  var json = '{"query": "' + text + '",';
+  json += '"lang": "en", "sessionId": "1234567890"}';
+
+  console.log(json);
+
+  xhr.send(json);
+}
+
+function createQuery(method, url) {
+  var xhr = new XMLHttpRequest();
+
+  if ("withCredentials" in xhr) {
+    xhr.open(method, url, true);
+  } else if (typeof XDomainRequest != "undefined") {
+    // XDomainRequest for IE.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // CORS not supported.
+    xhr = null;
+  }
+  return xhr;
 }
