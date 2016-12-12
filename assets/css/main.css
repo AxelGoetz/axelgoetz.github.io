@@ -31,7 +31,6 @@ html, body {
 
 @media screen and (min-width: 800px) and (max-width: 1000px) {
   .container {
-    height: 90%;
     width: 60%;
 
     position:absolute; /*it can be fixed too*/
@@ -47,7 +46,6 @@ html, body {
 
 @media screen and (min-width: 1000px) and (max-width: 1200px) {
   .container {
-    height: 90%;
     width: 50%;
 
     position:absolute; /*it can be fixed too*/
@@ -64,7 +62,6 @@ html, body {
 
 @media screen and (min-width: 1200px) and (max-width: 1400px) {
   .container {
-    height: 90%;
     width: 40%;
 
     position:absolute; /*it can be fixed too*/
@@ -80,7 +77,6 @@ html, body {
 
 @media screen and (min-width: 1400px) {
   .container {
-    height: 90%;
     width: 35%;
 
     position:absolute; /*it can be fixed too*/
@@ -91,6 +87,18 @@ html, body {
     border-radius: 5px;
 
     margin: auto;
+  }
+}
+
+@media screen and (min-width: 800px) and (min-height: 700px) {
+  .container {
+    height: 90%;
+  }
+}
+
+@media screen and (min-width: 800px) and (max-height: 700px) {
+  .container {
+    height: 95%;
   }
 }
 
