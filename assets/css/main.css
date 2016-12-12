@@ -10,12 +10,72 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Space Mono', monospace;
 }
 
-.container {
+.content {
   height: 100%;
   width: 100%;
+}
 
+@media screen and (max-width: 700px) {
+  .container {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 700px) and (max-width: 1000px) {
+  .container {
+    height: 90%;
+    width: 60%;
+
+    position:absolute; /*it can be fixed too*/
+    left:0; right:0;
+    top:0; bottom:0;
+
+    border: 5px solid black;
+    border-radius: 5px;
+
+    margin: auto;
+  }
+}
+
+
+@media screen and (min-width: 1000px) and (max-width: 1400px) {
+  .container {
+    height: 90%;
+    width: 40%;
+
+    position:absolute; /*it can be fixed too*/
+    left:0; right:0;
+    top:0; bottom:0;
+
+    border: 5px solid black;
+    border-radius: 5px;
+
+    margin: auto;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .container {
+    height: 90%;
+    width: 30%;
+
+    position:absolute; /*it can be fixed too*/
+    left:0; right:0;
+    top:0; bottom:0;
+
+    border: 5px solid black;
+    border-radius: 5px;
+
+    margin: auto;
+  }
+}
+
+
+.container {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
