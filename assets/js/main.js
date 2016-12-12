@@ -3,12 +3,13 @@ var message = "";
 var chatContainer = document.getElementById('chat-container');
 var ACCESSTOKEN = 'e3fa11a3a2e34cdd91dc67dc7a947e56';
 
-init();
+initChat();
 
-function init() {
+function initChat() {
   initInput();
   initButtons();
   initLastSeen();
+  initGravity();
   beginConversation();
 }
 
@@ -47,6 +48,11 @@ function initLastSeen() {
   document.getElementById('last-seen').innerHTML = text;
 
   setTimeout(initLastSeen, 10000);
+}
+
+function initGravity() {
+  init("canvas", size = [window.innerWidth, window.innerHeight], amountOfObjects = 75,
+  g = 0.2, slowDown = 25.0, resize = true);
 }
 
 function checkVisibilityPlaceHolder() {

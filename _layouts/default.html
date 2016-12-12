@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>
-      {% if page.title and page.title != "Home" %}
-        {{ page.title }}
-      {% else %}
-        {{ site.title }}
-      {% endif %}
+      {{ site.title }}
     </title>
 
     <meta name="author" content="{{ site.author }}">
@@ -28,7 +24,5 @@
     </div>
      <!-- {% include footer.html %} -->
   </body>
-
-  <script type="text/javascript" src="{{ "/assets/js/main.js" | prepend: site.baseurl }}"></script>
 
 </html>
