@@ -203,6 +203,10 @@ function getResponse() {
   var elem = document.getElementById(this.id);
   elem.getElementsByClassName("chat-message")[0].innerHTML = message;
   elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
+
+  elem = document.getElementById(this.id - 1);
+  elem.getElementsByClassName("fa-check")[0].style = "color: #5995f7;";
+
   id++;
 }
 
