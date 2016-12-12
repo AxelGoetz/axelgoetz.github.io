@@ -64,12 +64,24 @@ function keyDownEvent(e) {
   return true;
 }
 
+function escapeJSON(string) {
+  return string.replace(/\n/g, "\\\n")
+               .replace(/\'/g, "\\\'")
+               .replace(/\"/g, "\\\"")
+               .replace(/\&/g, "\\\&")
+               .replace(/\r/g, "\\\r")
+               .replace(/\t/g, "\\\t")
+               .replace(/\b/g, "\\\b")
+               .replace(/\f/g, "\\\f");
+}
+
 function sendMessage(text) {
   var newText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   // Checking for whitespace
   if(/\S/.test(newText) && newText != "&lt;div&gt;&lt;br&gt;&lt;/div&gt;") {
     chatContainer.innerHTML += getMessage(newText, id, false, true);
+    text = escapeJSON(text);
     setResponse(text);
   }
 }
