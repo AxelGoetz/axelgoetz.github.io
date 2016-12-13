@@ -380,3 +380,9 @@ html, body {
 #canvas {
   background-color: #4c5a70;
 }
+
+/* Message content */
+
+.help ul {
+  padding-left: 30px;
+}

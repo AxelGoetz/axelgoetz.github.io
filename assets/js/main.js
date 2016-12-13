@@ -1,9 +1,10 @@
 var id = 0;
+var map = {};
 var message = "";
 var chatContainer = document.getElementById('chat-container');
 var ACCESSTOKEN = 'e3fa11a3a2e34cdd91dc67dc7a947e56';
 
-initChat();
+window.onload = function() { initChat(); };
 
 function initChat() {
   initInput();
@@ -66,7 +67,7 @@ function checkVisibilityPlaceHolder() {
 
 function keyUpEvent(e) {
   var code = (e.keyCode ? e.keyCode : e.which);
-  if(code == 13) { // Enter
+  if(code == 13 && !map[16]) { // Enter and not shift
     var inputText = document.getElementById('input-text');
     var text = inputText.innerText;
 
@@ -75,12 +76,14 @@ function keyUpEvent(e) {
 
     scrollToBottom();
   }
+  map[code] = false;
   checkVisibilityPlaceHolder.call(this);
 }
 
 function keyDownEvent(e) {
   var code = (e.keyCode ? e.keyCode : e.which);
-  if(code == 13) { // Enter
+  map[code] = true;
+  if(code == 13 && !map[16]) { // Enter
     return false;
   }
   return true;
@@ -98,7 +101,8 @@ function escapeJSON(string) {
 }
 
 function sendMessage(text) {
-  var newText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  var newText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+                    .replace(/\n/g, "<br>");
 
   // Checking for whitespace
   if(/\S/.test(newText) && newText != "&lt;div&gt;&lt;br&gt;&lt;/div&gt;") {
@@ -209,7 +213,7 @@ function getResponse() {
 
   if(message == "help") {
     message = "Are you lost? No worries I'll help!</br>";
-    message += "You can do all of the following:</br>";
+    message += "You can just send me something and I'll try to respond. Here are some topics that I know the answer to:";
     message += getHelpMessage();
   }
 
@@ -256,8 +260,6 @@ function sendQuery(text, id) {
   var json = '{"query": "' + text + '",';
   json += '"lang": "en", "sessionId": "1234567890"}';
 
-  console.log(json);
-
   xhr.send(json);
 }
 
@@ -286,7 +288,7 @@ function getHelpMessage() {
   message += '<li>I know how to contact him or links to his Github and social media.</li>';
   message += "<li>If you want, I can show you some of Axel's open source projects.</li>";
   message += "<li>And many other features that you will probably never use.</li>";
-  message += "<li>Finally, if you're ever lost, just ask for <strong>help</strong></li>";
+  message += "<li>Finally, if you're ever lost, just ask for <strong>help</strong>.</li>";
   message += "</ul></div>";
   return message;
 }
