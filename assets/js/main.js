@@ -228,6 +228,8 @@ function getResponse() {
     message = getContactMessage();
   } else if(message == 'weather') {
     queryWttr(id); return;
+  } else if(message == 'about') {
+    message = generateAbout();
   }
 
   var elem = document.getElementById(this.id);
@@ -334,6 +336,14 @@ function getContactMessage() {
   message += 'Or you can have a look at his profile on the following websites.<a href="https://github.com/AxelGoetz" class="github"><i class="fa fa-github" aria-hidden="true"></i><span>Github</span></a>';
   message += '<a href="https://www.linkedin.com/in/axel-goetz-09427598" class="linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i><span>Linkedin</span></a>';
   message += '  <a href="https://facebook.com/axel.goetz9" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span></a>And here is his website... Oh wait, you\'re already here...</div>';
+
+  return message;
+}
+
+function generateAbout() {
+  var message = '<div class="about">Axel is a third year BSc. Computer Science student at UCL.</br>';
+  message += 'He is currently working on his thesis <a href="https://github.com/AxelGoetz/website-fingerprinting">"Automatic Feature Selection for Website Fingerprinting"</a>, which studies the use of advanced deep learning techniques to automatically select persistent features spread across time.';
+  message += '</br></br>He was born in Belgium but raised in Burundi, Congo, Belgium and Dubai and currently lives in London.  </br></br>Now he spends most of time finishing his degree and working on side projects.</div>';
 
   return message;
 }
