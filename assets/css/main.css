@@ -115,7 +115,6 @@ a:active {
   }
 }
 
-
 .container {
   display: flex;
   flex-direction: column;
@@ -415,4 +414,18 @@ a:active {
 
 .facebook span {
   padding-left: 4px;
+}
+
+/* Scroll Bar */
+#chat-container::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+#chat-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+#chat-container::-webkit-scrollbar-thumb {
+  background-color: #667387;
+  outline: 1px solid slategrey;
 }
