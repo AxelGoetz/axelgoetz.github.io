@@ -226,6 +226,8 @@ function getResponse() {
     message = getBackgroundMessage();
   } else if(message == 'contact') {
     message = getContactMessage();
+  } else if(message == 'weather') {
+    queryWttr(id); return;
   }
 
   var elem = document.getElementById(this.id);
@@ -321,4 +323,50 @@ function getContactMessage() {
   message += '  <a href="https://facebook.com/axel.goetz9" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span></a>And here is his website... Oh wait, you\'re already here...</div>';
 
   return message;
+}
+
+// ---------------------------------------
+// Weather
+
+function parseWttrData() {
+  var elem = document.createElement('div');
+  elem.innerHTML = this.xhr.responseText;
+
+  var pre = elem.getElementsByTagName('pre')[0];
+  var text = pre.outerHTML.substr(0, pre.outerHTML.indexOf('┌'));
+  text += '</pre>';
+  
+  elem = document.getElementById(this.id);
+  elem.getElementsByClassName("chat-message")[0].innerHTML = text;
+  elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
+
+  elem = document.getElementById(this.id - 1);
+  elem.getElementsByClassName("fa-check")[0].style = "color: #5995f7;";
+
+  id++;
+
+  scrollToBottom();
+}
+
+function queryWttr(id) {
+  var url = "http://wttr.in";
+  var xhr = createQuery("GET", url);
+  if (!xhr) {
+    // TODO: Cannot make query so need to set a response
+    return;
+  }
+
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+
+
+  this.xhr = xhr;
+  this.id = id;
+
+  xhr.onload = parseWttrData.bind(this);
+
+  xhr.onerror = function() {
+    console.log('Failed to make request');
+  };
+
+  xhr.send();
 }

@@ -317,6 +317,10 @@ a:active {
   padding-bottom: 12px;
 }
 
+.chat-message pre {
+  margin: 0;
+}
+
 .meta-data {
   bottom: 3px;
   right: 7px;
