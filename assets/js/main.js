@@ -5,12 +5,13 @@ var chatContainer = document.getElementById('chat-container');
 var ACCESSTOKEN = 'e3fa11a3a2e34cdd91dc67dc7a947e56';
 
 window.onload = function() { initChat(); };
+initGravity();
 
 function initChat() {
   initInput();
   initButtons();
   initLastSeen();
-  initGravity();
+  logToConsole();
   beginConversation();
 }
 
@@ -54,6 +55,12 @@ function initLastSeen() {
 function initGravity() {
   init("canvas", size = [window.innerWidth, window.innerHeight], amountOfObjects = 75,
   g = 0.2, slowDown = 25.0, resize = true);
+}
+
+function logToConsole() {
+  console.log('%c Hi there!', 'font-weight: bold;');
+  console.log('Hope you have fun playing around in the console. Just let me know if you break anything or just want to have a chat :)');
+  console.log('You can contact me at: %c axel.goetz@hotmail.com', 'color: #5995f7;');
 }
 
 function checkVisibilityPlaceHolder() {
@@ -215,6 +222,10 @@ function getResponse() {
     message = "Are you lost? No worries I'll help!</br>";
     message += "You can just send me something and I'll try to respond. Here are some topics that I know the answer to:";
     message += getHelpMessage();
+  } else if(message == 'background') {
+    message = getBackgroundMessage();
+  } else if(message == 'contact') {
+    message = getContactMessage();
   }
 
   var elem = document.getElementById(this.id);
@@ -290,5 +301,24 @@ function getHelpMessage() {
   message += "<li>And many other features that you will probably never use.</li>";
   message += "<li>Finally, if you're ever lost, just ask for <strong>help</strong>.</li>";
   message += "</ul></div>";
+  return message;
+}
+
+function getBackgroundMessage() {
+  var message = '<div class="background">';
+  message += 'This background was a really short project of mine. It was inspired by <a href="http://vincentgarreau.com/particles.js/">particles.js</a> ';
+  message += 'and the <a href="https://deepmind.com/">Deepmind website</a>. If you\'re interested, you can find more info <a href="https://agoetz.me/gravity-simulation/">here</a>.</div>';
+
+  return message;
+}
+
+function getContactMessage() {
+  var message = '<div class="contact">Here are some of the ways that you can contact Axel:</br>';
+  message += '<a href="mailto:axel.goetz@hotmail.com" class="mail"><i class="fa fa-envelope" aria-hidden="true"></i><span>axel.goetz@hotmail.com</span>';
+  message += '</a><a href="tel:+447899337628" class="phone"><i class="fa fa-phone" aria-hidden="true"></i><span>(+44)7899337628</span></a>';
+  message += 'Or you can have a look at his profile on the following websites.<a href="https://github.com/AxelGoetz" class="github"><i class="fa fa-github" aria-hidden="true"></i><span>Github</span></a>';
+  message += '<a href="https://www.linkedin.com/in/axel-goetz-09427598" class="linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i><span>Linkedin</span></a>';
+  message += '  <a href="https://facebook.com/axel.goetz9" class="facebook"><i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span></a>And here is his website... Oh wait, you\'re already here...</div>';
+
   return message;
 }
