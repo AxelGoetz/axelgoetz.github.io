@@ -335,7 +335,7 @@ function parseWttrData() {
   var pre = elem.getElementsByTagName('pre')[0];
   var text = pre.outerHTML.substr(0, pre.outerHTML.indexOf('┌'));
   text += '</pre>';
-  
+
   elem = document.getElementById(this.id);
   elem.getElementsByClassName("chat-message")[0].innerHTML = text;
   elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
@@ -349,7 +349,7 @@ function parseWttrData() {
 }
 
 function queryWttr(id) {
-  var url = "http://wttr.in";
+  var url = "http://wttr.in/";
   var xhr = createQuery("GET", url);
   if (!xhr) {
     // TODO: Cannot make query so need to set a response
