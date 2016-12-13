@@ -255,7 +255,7 @@ function sendQuery(text, id) {
   var url = "https://api.api.ai/v1/query?v=20150910";
   var xhr = createQuery("POST", url);
   if (!xhr) {
-    // TODO: Cannot make query so need to set a response
+    failedQuery.call(this);
     return;
   }
 
@@ -266,9 +266,7 @@ function sendQuery(text, id) {
   this.id = id;
 
   xhr.onload = getResponse.bind(this);
-  xhr.onerror = function() {
-    console.log('Failed to make request');
-  };
+  xhr.onerror = failedQuery.bind(this);
 
   var json = '{"query": "' + text + '",';
   json += '"lang": "en", "sessionId": "1234567890"}';
@@ -290,6 +288,21 @@ function createQuery(method, url) {
     xhr = null;
   }
   return xhr;
+}
+
+function failedQuery() {
+  var text = "I'm sorry but something went wrong :(";
+
+  elem = document.getElementById(this.id);
+  elem.getElementsByClassName("chat-message")[0].innerHTML = text;
+  elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
+
+  elem = document.getElementById(this.id - 1);
+  elem.getElementsByClassName("fa-check")[0].style = "color: #5995f7;";
+
+  id++;
+
+  scrollToBottom();
 }
 
 // ---------------------------------------
@@ -352,7 +365,7 @@ function queryWttr(id) {
   var url = "http://wttr.in/";
   var xhr = createQuery("GET", url);
   if (!xhr) {
-    // TODO: Cannot make query so need to set a response
+    failedQuery.call(this);
     return;
   }
 
@@ -363,10 +376,7 @@ function queryWttr(id) {
   this.id = id;
 
   xhr.onload = parseWttrData.bind(this);
-
-  xhr.onerror = function() {
-    console.log('Failed to make request');
-  };
+  xhr.onerror = failedQuery.bind(this);
 
   xhr.send();
 }
