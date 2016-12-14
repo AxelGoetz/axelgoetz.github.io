@@ -14,6 +14,14 @@
 
     <meta name="author" content="{{ site.author }}">
 
+    <meta property="og:site_name" content="{{ site.title }}">
+   <meta property="og:type" content="website">
+   <meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+   <meta property="og:title" content="Axel Goetz">
+   <meta property="og:description" content="{{ site.description }}">
+   {% if page.image %}<meta property="og:image" content="{{ page.image | prepend: site.baseurl | prepend: site.url }}">{% endif %}
+   <meta property="article:publisher" content="{{ site.facebook_url }}">
+
     <link rel="shortcut icon" href="{{ "/assets/images/favicon.png" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

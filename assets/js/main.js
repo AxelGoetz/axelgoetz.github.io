@@ -54,8 +54,6 @@ function initButtons() {
   };
 }
 
-
-
 function initLastSeen() {
   var now = new Date();
   var h = now.getHours();
