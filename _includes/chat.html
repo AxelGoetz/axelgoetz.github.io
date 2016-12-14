@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="center-vertically">
-      <i id="menu" class="fa fa-bars" aria-hidden="true"></i>
+      {% include dropdown.html %}
     </div>
   </div>
   <div id="chat-container">
@@ -25,6 +25,11 @@
       <i id="send-button" class="fa fa-paper-plane" aria-hidden="true"></i>
     </div>
   </div>
+</div>
+<div id="modals">
+  {% include credits.html %}
+  {% include help.html %}
+  {% include website-info.html %}
 </div>
 <canvas id="canvas"></canvas>
 

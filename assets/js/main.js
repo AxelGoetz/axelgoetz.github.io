@@ -11,7 +11,9 @@ window.onload = function() { initChat(); };
 initGravity();
 
 function initChat() {
+  initMenu();
   initInput();
+  initModals();
   initButtons();
   initLastSeen();
   logToConsole();
@@ -356,7 +358,7 @@ function generateAbout() {
 function getASCIIWeather(data) {
   var code = data.current_condition[0].weatherCode;
   if(code == 113) {
-    return '\\   /    \n     .-.     \n  ‒ (   ) ‒  \n     `-᾿     \n    /   \\    ';
+    return '   \\   /    \n     .-.     \n  ‒ (   ) ‒  \n     `-᾿     \n    /   \\    ';
   } else if(code == 116 || code == 200 || code == 386) {
     return '   \\        \n _ /\"\"\.-.    \n   \\_\(   ).  \n   /(___(__) ';
   } else if(code == 119) {
@@ -388,7 +390,7 @@ function parseWeatherData() {
   if(Math.abs(data.current_condition[0].temp_C - data.current_condition[0].FeelsLikeC) > 3) {
     text += "But it feels like <b>" + data.current_condition[0].FeelsLikeC + " °C. </b>";
   }
-  text += '<pre>' + getASCIIWeather(data) + '</pre>';
+  text += '<a class="weather" href="http://www.accuweather.com"><pre>' + getASCIIWeather(data) + '</pre></a>';
 
   updateText(this, text);
 }
@@ -437,4 +439,52 @@ function parseNewsData() {
   text += '</ul>';
 
   updateText(this, text);
+}
+
+// ---------------------------------------
+// Menu
+
+function initMenu() {
+  window.onclick = windowOnClick;
+  document.getElementById('clear-messages').onclick = function() { chatContainer.innerHTML = ''; };
+}
+
+function showMenu() {
+  document.getElementById("menu-dropdown").classList.toggle("show");
+}
+
+function windowOnClick(event) {
+  if (!event.target.matches('.dropbtn') && !event.target.matches('#menu')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+// ---------------------------------------
+// Modals
+
+function initModals() {
+  initModal('modal-credit', 'credit-button');
+  initModal('modal-help', 'help-button');
+  initModal('modal-website', 'website-button');
+}
+
+function initModal(modalID, btnID) {
+  var modal = document.getElementById(modalID);
+  var btn = document.getElementById(btnID);
+  var span = modal.getElementsByClassName("close")[0];
+
+  btn.onclick = function() {
+      modal.style.display = "block";
+  };
+
+  span.onclick = function() {
+      modal.style.display = "none";
+  };
 }
