@@ -319,6 +319,7 @@ a:active {
 
 .chat-message pre {
   margin: 0;
+  text-align: center;
 }
 
 .meta-data {

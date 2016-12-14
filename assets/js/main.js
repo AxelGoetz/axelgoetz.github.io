@@ -1,8 +1,10 @@
 var id = 0;
+var IP = '';
 var map = {};
 var message = "";
 var chatContainer = document.getElementById('chat-container');
 var ACCESSTOKEN = 'e3fa11a3a2e34cdd91dc67dc7a947e56';
+var WEATHERKEY = 'fecc61c1534f4e25bb3233743161312';
 
 window.onload = function() { initChat(); };
 initGravity();
@@ -55,6 +57,10 @@ function initLastSeen() {
 function initGravity() {
   init("canvas", size = [window.innerWidth, window.innerHeight], amountOfObjects = 75,
   g = 0.2, slowDown = 25.0, resize = true);
+}
+
+function setIP(json) {
+  IP = json.ip;
 }
 
 function logToConsole() {
@@ -227,7 +233,8 @@ function getResponse() {
   } else if(message == 'contact') {
     message = getContactMessage();
   } else if(message == 'weather') {
-    queryWttr(id); return;
+    queryAPI(id, "https://api.worldweatheronline.com/premium/v1/weather.ashx?key=" + WEATHERKEY + "&q=" + IP + "&num-of-days=1&format=json", parseWeatherData);
+    return;
   } else if(message == 'about') {
     message = generateAbout();
   }
@@ -351,13 +358,42 @@ function generateAbout() {
 // ---------------------------------------
 // Weather
 
-function parseWttrData() {
-  var elem = document.createElement('div');
-  elem.innerHTML = this.xhr.responseText;
+function getASCIIWeather(data) {
+  var code = data.current_condition[0].weatherCode;
+  if(code == 113) {
+    return '\\   /    \n     .-.     \n  ‒ (   ) ‒  \n     `-᾿     \n    /   \\    ';
+  } else if(code == 116 || code == 200 || code == 386) {
+    return '   \\        \n _ /\"\"\.-.    \n   \\_\(   ).  \n   /(___(__) ';
+  } else if(code == 119) {
+    return '     .--.    \n  .-(    ).  \n (___.__)__) ';
+  } else if(code == 122) {
+    return '     .--.    \n  .-(    ).  \n (___.__)__) ';
+  } else if(code == 143 || code == 248 || code == 260) {
+    return  '_ - _ - _ - \n  _ - _ - _  \n _ - _ - _ - ';
+  } else if(code == 227 || code == 320 || code == 323 || code == 326 || code == 368) {
+    return '     .-.     \n    (   ).   \n   (___(__)  \n    *  *  *  \n   *  *  *   ';
+  } else if(code == 230 || code == 329 || code == 332 || code == 338 || code == 335 || code == 371 || code == 395) {
+    return '     .-.     \n    (   ).   \n   (___(__)  \n   * * * *   \n  * * * *  ';
+  } else if(code == 226 || code ==  293|| code == 296 || code == 182 || code == 185 || code == 281 || code == 284 || code == 311 || code == 314 || code == 317 || code == 350 || code == 377 || code == 179 || code == 362 || code == 365 || code == 374 || code == 176 || code == 263) {
+    return '     .-.     \n    (   ).   \n   (___(__)  \n    ʻ ʻ ʻ ʻ  \n   ʻ ʻ ʻ ʻ  ';
+  } else if(code == 302 || code == 308 || code == 359 || code == 299 || code == 305 || code == 356 || code == 389 || code == 392) {
+    return '    .-.     \n    (   ).   \n   (___(__)  \n  ‚ʻ‚ʻ‚ʻ‚ʻ   \n  ‚ʻ‚ʻ‚ʻ‚ʻ   ';
+  } else {
+    return '';
+  }
+}
 
-  var pre = elem.getElementsByTagName('pre')[0];
-  var text = pre.outerHTML.substr(0, pre.outerHTML.indexOf('┌'));
-  text += '</pre>';
+function parseWeatherData() {
+  var result = JSON.parse(this.xhr.responseText);
+  var data = result.data;
+
+  text = "Ok, here are the current weather conditions: ";
+  text += "It's currently <b>" + data.current_condition[0].weatherDesc[0].value + " and " + data.current_condition[0].temp_C + " °C </b>";
+  text += "with a wind speed of <b>" + data.current_condition[0].windspeedKmph + " " + data.current_condition[0].winddir16Point + " kmph. </b>";
+  if(Math.abs(data.current_condition[0].temp_C - data.current_condition[0].FeelsLikeC) > 3) {
+    text += "But it feels like <b>" + data.current_condition[0].FeelsLikeC + " °C. </b>";
+  }
+  text += '<pre>' + getASCIIWeather(data) + '</pre>';
 
   elem = document.getElementById(this.id);
   elem.getElementsByClassName("chat-message")[0].innerHTML = text;
@@ -371,8 +407,7 @@ function parseWttrData() {
   scrollToBottom();
 }
 
-function queryWttr(id) {
-  var url = "http://wttr.in/";
+function queryAPI(id, url, onload) {
   var xhr = createQuery("GET", url);
   if (!xhr) {
     failedQuery.call(this);
@@ -381,12 +416,14 @@ function queryWttr(id) {
 
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
 
-
   this.xhr = xhr;
   this.id = id;
 
-  xhr.onload = parseWttrData.bind(this);
+  xhr.onload = onload.bind(this);
   xhr.onerror = failedQuery.bind(this);
 
   xhr.send();
 }
+
+// ---------------------------------------
+// News
