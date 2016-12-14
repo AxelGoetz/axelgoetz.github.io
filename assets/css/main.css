@@ -84,6 +84,10 @@ footer {
   text-decoration: none;
 }
 
+.social-media i {
+  color: #777;
+}
+
 .content {
   height: 100%;
   width: 100%;
