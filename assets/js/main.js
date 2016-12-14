@@ -243,6 +243,9 @@ function getResponse() {
   } else if(message == 'news') {
     queryAPI(id, 'https://newsapi.org/v1/articles?source=techcrunch&apiKey=' + NEWSKEY, parseNewsData);
     return;
+  } else if(message == 'projects') {
+    queryAPI(id, '/data/projects.json', parseProjectsData);
+    return;
   }
 
   updateText(this, message);
@@ -487,4 +490,27 @@ function initModal(modalID, btnID) {
   span.onclick = function() {
       modal.style.display = "none";
   };
+}
+
+// ---------------------------------------
+// Projects
+
+function parseProjectsData() {
+  var result = JSON.parse(this.xhr.responseText);
+  result = result.data;
+  var text = "Here are some of Axel's projects:<ul class='projects-chat'>";
+
+  for(var i = 0; i < result.length; i++) {
+    text += '<li><a href="/projects/' + result[i].project_id + '/">' + result[i].title + '</a>';
+    if(result[i].demo_link !== undefined) {
+      text += '<a href="' + result[i].demo_link + '"><i class="fa fa-globe" aria-hidden="true"></i></a>';
+    } else {
+      text += '<i class="fa fa-github" style="color: rgba(0, 0, 0, 0); cursor: auto" aria-hidden="true"></i>';
+    }
+    text += '<a href="' + result[i].github_link + '"><i class="fa fa-github" aria-hidden="true"></i></a>';
+    text += '</li>';
+  }
+  text += '</ul>';
+
+  updateText(this, text);
 }

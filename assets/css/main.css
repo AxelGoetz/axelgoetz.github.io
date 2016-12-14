@@ -689,3 +689,13 @@ footer {
     padding-right: 15%;
   }
 }
+
+.projects-chat {
+  padding-right: 34px;
+}
+
+.projects-chat i {
+  float: right;
+  padding-right: 2px;
+  font-size: 1.2em;
+}
