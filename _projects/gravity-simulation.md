@@ -5,8 +5,6 @@ github_link: https://github.com/AxelGoetz/gravity-simulation
 demo_link: https://agoetz.me/gravity-simulation/
 ---
 
-<iframe src="https://agoetz.me/gravity-simulation/" style="width: 100%; height: 70%; align: center;"></iframe>
-
 The index page's background of [my website](https://agoetz.me) was still fairly empty and I wanted a cool way to fill it up.
 Inspired by [particles.js](http://vincentgarreau.com/particles.js) and [the Deepmind website](https://deepmind.com/), I created this project.
 

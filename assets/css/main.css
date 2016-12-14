@@ -11,24 +11,87 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Space Mono', monospace;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 a:link {
-    color: #000;
+  color: #000;
 }
 
 a:visited {
-    color: #000;
+  color: #000;
 }
 
 a:active {
-    font-weight: bold;
+  font-weight: bold;
+}
+
+a:hover {
+  font-weight: bold;
+}
+
+/* Header */
+header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: baseline;
+
+  padding: 15px;
+
+  background-color: #eee;
+
+  min-height: 30px;
+}
+
+.header-title {
+  font-size: 1.5em;
+}
+
+.navigation a {
+  text-decoration: none;
+}
+
+/* Footer */
+footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: baseline;
+
+  padding: 10px;
+
+  background-color: #eee;
+
+  min-height: 40px;
+}
+
+.axelcopyright {
+  margin: auto 20%;
+  margin-left: 0;
+}
+
+.social-media {
+  font-size: 1.8em;
+  margin: auto 0;
+}
+
+.social-media a {
+  text-decoration: none;
 }
 
 .content {
   height: 100%;
   width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 @media screen and (max-width: 800px) {
@@ -422,25 +485,21 @@ a:active {
 }
 
 /* Scroll Bar */
-#chat-container::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 0.5em;
 }
 
-#chat-container::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
 
-#chat-container::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: #667387;
   outline: 1px solid slategrey;
 }
 
 .news a {
   text-decoration: none;
-}
-
-.news a:hover {
-  font-weight: bold;
 }
 
 .weather {
@@ -568,4 +627,56 @@ a:active {
 
 #modal-website .modal-body {
   padding: 20px 16px;
+}
+
+/* Projects */
+
+.website-wrapper {
+  padding: 10px 40px;
+  flex-grow: 1;
+}
+
+.demo-iframe {
+  width: 90%;
+  height: 35em;
+
+  display: block;
+  margin: auto;
+}
+
+.iframe-explanation {
+  font-size: 10px;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+@media screen and (max-width: 800px) {
+  .demo-iframe {
+    display: none;
+  }
+
+  .iframe-explanation {
+    display: none;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  .demo-iframe {
+    display: none;
+  }
+
+  .iframe-explanation {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .demo-iframe {
+    width: 70%;
+  }
+
+  .iframe-explanation {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
 }

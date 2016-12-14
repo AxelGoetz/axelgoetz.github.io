@@ -8,10 +8,12 @@ github_link: https://github.com/AxelGoetz/basic-shell
 
 It has the following features:
 
-- Variable assignment for any variable ($HOME=/Users/...)
-- Program execution (ls, cd, ...)
-- Printing variables (printenv)
-- Spacing and escape characters (cd "my directory" or cd my\ directory)
-- Quit the shell (exit)
+<ul>
+<li>Variable assignment for any variable ($HOME=/Users/...)</li>
+<li>Program execution (ls, cd, ...)</li>
+<li>Printing variables (printenv)</li>
+<li>Spacing and escape characters (cd "my directory" or cd my\ directory)</li>
+<li>Quit the shell (exit)</li>
+</ul>
 
 You can test it by first running the `make` command and then running the shel `./main`.
