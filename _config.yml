@@ -37,3 +37,5 @@ defaults:
       type: "projects"
     values:
       layout: "standard"
+
+# permalink: /404.html
