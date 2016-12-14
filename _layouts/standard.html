@@ -1,0 +1,27 @@
+---
+layout: default
+---
+{% assign project = page %}
+<div class="wrapper">
+  {% include header.html %}
+
+  <div class="website-wrapper">
+    {% if project.demo_link %}
+    <iframe class="demo-iframe" src="{{ project.demo_link }}"></iframe>
+    {% if project.iframe_explanation %}
+    <div class="iframe-explanation">{{ project.iframe_explanation }}</div>
+    {% endif %}
+    {% endif %}
+
+    {{ content }}
+
+    {% if project.demo_link %}
+    <div>If you want to see the demo in full size, click <a href="{{ page.demo_link }}">here</a>.</div>
+    {% endif %}
+    {% if project.github_link %}
+    <div>The project can also be found on Github <a href="{{ project.github_link }}">here</a>.</div>
+    {% endif %}
+  </div>
+
+  {% include footer.html %}  
+</div>
