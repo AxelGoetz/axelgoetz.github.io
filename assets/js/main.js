@@ -40,7 +40,21 @@ function initButtons() {
     checkVisibilityPlaceHolder.call(inputText);
     scrollToBottom();
   };
+
+  document.getElementById('question').onclick = function() {
+    var message = "Are you lost? No worries I'll help!</br>";
+    message += "You can just send me something and I'll try to respond. Here are some topics that I know the answer to:";
+    message += getHelpMessage();
+
+    var elem = getMessage(message, id, true, true);
+    chatContainer.innerHTML += elem;
+    id++;
+
+    scrollToBottom();
+  };
 }
+
+
 
 function initLastSeen() {
   var now = new Date();
@@ -223,7 +237,6 @@ function animateLoading(id) {
 }
 
 function getResponse() {
-  // TODO: Query website for appropriate response
   var result = JSON.parse(this.xhr.responseText);
   var message = result.result.fulfillment.speech;
 
@@ -511,6 +524,7 @@ function parseProjectsData() {
     text += '</li>';
   }
   text += '</ul>';
+  text += 'For more cool projects, checkout my <a href="https://github.com/AxelGoetz">Github</a>.';
 
   updateText(this, text);
 }
