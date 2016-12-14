@@ -5,6 +5,7 @@ var message = "";
 var chatContainer = document.getElementById('chat-container');
 var ACCESSTOKEN = 'e3fa11a3a2e34cdd91dc67dc7a947e56';
 var WEATHERKEY = 'fecc61c1534f4e25bb3233743161312';
+var NEWSKEY = 'e512748454b04be5ba472a2dd7c1ab12';
 
 window.onload = function() { initChat(); };
 initGravity();
@@ -237,18 +238,12 @@ function getResponse() {
     return;
   } else if(message == 'about') {
     message = generateAbout();
+  } else if(message == 'news') {
+    queryAPI(id, 'https://newsapi.org/v1/articles?source=techcrunch&apiKey=' + NEWSKEY, parseNewsData);
+    return;
   }
 
-  var elem = document.getElementById(this.id);
-  elem.getElementsByClassName("chat-message")[0].innerHTML = message;
-  elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
-
-  elem = document.getElementById(this.id - 1);
-  elem.getElementsByClassName("fa-check")[0].style = "color: #5995f7;";
-
-  id++;
-
-  scrollToBottom();
+  updateText(this, message);
 }
 
 function setResponse(text) {
@@ -395,16 +390,7 @@ function parseWeatherData() {
   }
   text += '<pre>' + getASCIIWeather(data) + '</pre>';
 
-  elem = document.getElementById(this.id);
-  elem.getElementsByClassName("chat-message")[0].innerHTML = text;
-  elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
-
-  elem = document.getElementById(this.id - 1);
-  elem.getElementsByClassName("fa-check")[0].style = "color: #5995f7;";
-
-  id++;
-
-  scrollToBottom();
+  updateText(this, text);
 }
 
 function queryAPI(id, url, onload) {
@@ -425,5 +411,30 @@ function queryAPI(id, url, onload) {
   xhr.send();
 }
 
+function updateText(that, text) {
+  elem = document.getElementById(that.id);
+  elem.getElementsByClassName("chat-message")[0].innerHTML = text;
+  elem.getElementsByClassName("chat-bubble")[0].innerHTML += getMeta();
+
+  elem = document.getElementById(that.id - 1);
+  elem.getElementsByClassName("fa-check")[0].style = "color: #5995f7;";
+
+  id++;
+
+  scrollToBottom();
+}
 // ---------------------------------------
 // News
+
+function parseNewsData() {
+  var result = JSON.parse(this.xhr.responseText);
+
+  var text = "Here is the news for today:<ul class='news'>";
+  for(var i = 0; i < 7 && i < result.articles.length; i++) {
+    if(result.articles[i].title == "Crunch Report") continue;
+    text += '<li><a href=' + result.articles[i].url +'>' + result.articles[i].title + '</a></li>';
+  }
+  text += '</ul>';
+
+  updateText(this, text);
+}

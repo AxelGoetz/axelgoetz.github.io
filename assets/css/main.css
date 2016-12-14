@@ -434,3 +434,11 @@ a:active {
   background-color: #667387;
   outline: 1px solid slategrey;
 }
+
+.news a {
+  text-decoration: none;
+}
+
+.news a:hover {
+  font-weight: bold;
+}
