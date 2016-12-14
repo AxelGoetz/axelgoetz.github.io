@@ -50,8 +50,8 @@ header {
   font-size: 1.5em;
 }
 
-.navigation a {
-  text-decoration: none;
+.navigation  {
+  font-size: 1.8em;
 }
 
 /* Footer */
@@ -669,7 +669,7 @@ footer {
   }
 }
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 600px) {
   .demo-iframe {
     display: none;
   }
