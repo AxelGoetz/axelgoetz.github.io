@@ -98,7 +98,6 @@ function keyUpEvent(e) {
   if(code == 13 && !map[16]) { // Enter and not shift
     var inputText = document.getElementById('input-text');
     var text = inputText.innerText;
-
     sendMessage(text);
     inputText.innerHTML = "";
 
@@ -131,6 +130,7 @@ function escapeJSON(string) {
 function sendMessage(text) {
   var newText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;")
                     .replace(/\n/g, "<br>");
+  newText = checkText(newText);
 
   // Checking for whitespace
   if(/\S/.test(newText) && newText != "&lt;div&gt;&lt;br&gt;&lt;/div&gt;") {
@@ -501,6 +501,13 @@ function initModal(modalID, btnID) {
   span.onclick = function() {
       modal.style.display = "none";
   };
+}
+
+function checkText(text) {
+  while(text.slice(-4, text.length) == '<br>') {
+    text = text.slice(0, -4);
+  }
+  return text;
 }
 
 // ---------------------------------------

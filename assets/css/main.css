@@ -399,6 +399,11 @@ footer {
   text-align: center;
 }
 
+.chat-message ul {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 .meta-data {
   bottom: 3px;
   right: 7px;
