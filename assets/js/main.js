@@ -287,6 +287,7 @@ function sendQuery(text, id) {
 
   xhr.onload = getResponse.bind(this);
   xhr.onerror = failedQuery.bind(this);
+  xhr.ontimeout = failedQuery.bind(this);
 
   var json = '{"query": "' + text + '",';
   json += '"lang": "en", "sessionId": "1234567890"}';
@@ -307,6 +308,7 @@ function createQuery(method, url) {
     // CORS not supported.
     xhr = null;
   }
+  xhr.timeout = 2000;
   return xhr;
 }
 
@@ -423,6 +425,7 @@ function queryAPI(id, url, onload) {
 
   xhr.onload = onload.bind(this);
   xhr.onerror = failedQuery.bind(this);
+  xhr.ontimeout = failedQuery.bind(this);
 
   xhr.send();
 }
