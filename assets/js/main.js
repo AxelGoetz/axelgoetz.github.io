@@ -344,7 +344,7 @@ function getHelpMessage() {
 function getBackgroundMessage() {
   var message = '<div class="background">';
   message += 'This background was a really short project of mine. It was inspired by <a href="http://vincentgarreau.com/particles.js/">particles.js</a> ';
-  message += 'and the <a href="https://deepmind.com/">Deepmind website</a>. If you\'re interested, you can find more info <a href="https://agoetz.me/gravity-simulation/">here</a>.</div>';
+  message += 'and the <a href="https://deepmind.com/">Deepmind website</a>. If you\'re interested, you can find more info <a href="https://agoetz.me/projects/gravity-simulation">here</a>.</div>';
 
   return message;
 }
