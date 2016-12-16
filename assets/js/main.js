@@ -308,7 +308,7 @@ function createQuery(method, url) {
     // CORS not supported.
     xhr = null;
   }
-  xhr.timeout = 2000;
+  xhr.timeout = 8000;
   return xhr;
 }
 
