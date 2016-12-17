@@ -80,6 +80,11 @@ footer {
   margin-left: 0;
 }
 
+.axelcopyright i:hover {
+  color: #000;
+  cursor: auto;
+}
+
 .social-media {
   font-size: 1.8em;
   margin: auto 0;
