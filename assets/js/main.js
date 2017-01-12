@@ -257,6 +257,10 @@ function getResponse() {
   } else if(message == 'projects') {
     queryAPI(id, '/data/projects.json', parseProjectsData);
     return;
+  } else if(message == 'time') {
+    message = getTime();
+  } else if(message == 'date') {
+    message = getDate();
   }
 
   updateText(this, message);
@@ -441,6 +445,28 @@ function updateText(that, text) {
   id++;
 
   scrollToBottom();
+}
+
+function getTime() {
+  var message = "The current time is ";
+  var date = new Date();
+  message += date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+  message += ':';
+  message += date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+
+  return message;
+}
+
+function getDate() {
+  var message = "Today's date is ";
+  var date = new Date();
+  message += date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  message += '/';
+  message += date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+  message += '/';
+  message += date.getFullYear();
+
+  return message;
 }
 // ---------------------------------------
 // News
