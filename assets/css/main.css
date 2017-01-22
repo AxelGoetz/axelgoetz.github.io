@@ -310,7 +310,7 @@ footer {
   z-index: 1;
   width: 100%;
 
-  outline: 0px solid transparent;
+  outline: 1px solid transparent;
 }
 
 
