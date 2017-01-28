@@ -401,16 +401,21 @@ function getASCIIWeather(data) {
 }
 
 function parseWeatherData() {
-  var result = JSON.parse(this.xhr.responseText);
-  var data = result.data;
+  var text = '';
+  if(this.xhr.responseText === '') {
+    text = 'Sorry, couldn\'t get the data :(';
+  } else {
+    var result = JSON.parse(this.xhr.responseText);
+    var data = result.data;
 
-  text = "Ok, here are the current weather conditions: ";
-  text += "It's currently <b>" + data.current_condition[0].weatherDesc[0].value + " and " + data.current_condition[0].temp_C + " °C </b>";
-  text += "with a wind speed of <b>" + data.current_condition[0].windspeedKmph + " " + data.current_condition[0].winddir16Point + " kmph. </b>";
-  if(Math.abs(data.current_condition[0].temp_C - data.current_condition[0].FeelsLikeC) > 3) {
-    text += "But it feels like <b>" + data.current_condition[0].FeelsLikeC + " °C. </b>";
+    text = "Ok, here are the current weather conditions: ";
+    text += "It's currently <b>" + data.current_condition[0].weatherDesc[0].value + " and " + data.current_condition[0].temp_C + " °C </b>";
+    text += "with a wind speed of <b>" + data.current_condition[0].windspeedKmph + " " + data.current_condition[0].winddir16Point + " kmph. </b>";
+    if(Math.abs(data.current_condition[0].temp_C - data.current_condition[0].FeelsLikeC) > 3) {
+      text += "But it feels like <b>" + data.current_condition[0].FeelsLikeC + " °C. </b>";
+    }
+    text += '<a class="weather" href="http://www.accuweather.com"><pre>' + getASCIIWeather(data) + '</pre></a>';
   }
-  text += '<a class="weather" href="http://www.accuweather.com"><pre>' + getASCIIWeather(data) + '</pre></a>';
 
   updateText(this, text);
 }
