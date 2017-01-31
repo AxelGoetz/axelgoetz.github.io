@@ -261,6 +261,8 @@ function getResponse() {
     message = getTime();
   } else if(message == 'date') {
     message = getDate();
+  } else if(message == 'ip') {
+    message = "Your public IP is: " + IP;
   }
 
   updateText(this, message);
@@ -427,7 +429,7 @@ function queryAPI(id, url, onload) {
     return;
   }
 
-  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
+  xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 
   this.xhr = xhr;
   this.id = id;
