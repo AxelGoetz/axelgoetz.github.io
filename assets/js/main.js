@@ -247,7 +247,7 @@ function getResponse() {
   } else if(message == 'contact') {
     message = getContactMessage();
   } else if(message == 'weather') {
-    queryAPI(id, "https://api.worldweatheronline.com/premium/v1/weather.ashx?key=" + WEATHERKEY + "&q=" + IP + "&num-of-days=1&format=json", parseWeatherData);
+    queryAPI(id, "https://api.worldweatheronline.com/premium/v1/weather.ashx?key=" + WEATHERKEY + "&q=" + IP + "&format=json", parseWeatherData);
     return;
   } else if(message == 'about') {
     message = generateAbout();
