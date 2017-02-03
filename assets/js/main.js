@@ -81,7 +81,7 @@ function setIP(json) {
 function logToConsole() {
   console.log('%c Hi there!', 'font-weight: bold;');
   console.log('Hope you have fun playing around in the console. Just let me know if you break anything or just want to have a chat :)');
-  console.log('You can contact me at: %c axel.goetz@hotmail.com', 'color: #5995f7;');
+  console.log('You can contact me at: %c contact@agoetz.me', 'color: #5995f7;');
 }
 
 function checkVisibilityPlaceHolder() {
@@ -357,7 +357,7 @@ function getBackgroundMessage() {
 
 function getContactMessage() {
   var message = '<div class="contact">Here are some of the ways that you can contact Axel:</br>';
-  message += '<a href="mailto:axel.goetz@hotmail.com" class="mail"><i class="fa fa-envelope" aria-hidden="true"></i><span>axel.goetz@hotmail.com</span>';
+  message += '<a href="mailto:contact@agoetz.me" class="mail"><i class="fa fa-envelope" aria-hidden="true"></i><span>contact@agoetz.me</span>';
   message += '</a><a href="tel:+447899337628" class="phone"><i class="fa fa-phone" aria-hidden="true"></i><span>(+44)7899337628</span></a>';
   message += 'Or you can have a look at his profile on the following websites.<a href="https://github.com/AxelGoetz" class="github"><i class="fa fa-github" aria-hidden="true"></i><span>Github</span></a>';
   message += '<a href="https://www.linkedin.com/in/axel-goetz-09427598" class="linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i><span>Linkedin</span></a>';
