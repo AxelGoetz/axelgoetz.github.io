@@ -4,7 +4,7 @@ var map = {};
 var message = "";
 var chatContainer = document.getElementById('chat-container');
 var ACCESSTOKEN = 'e3fa11a3a2e34cdd91dc67dc7a947e56';
-var WEATHERKEY = 'fecc61c1534f4e25bb3233743161312';
+var WEATHERKEY = '55ce69c2349a4ec3be4111427171202';
 var NEWSKEY = 'e512748454b04be5ba472a2dd7c1ab12';
 
 window.onload = function() { initChat(); };
@@ -247,7 +247,7 @@ function getResponse() {
   } else if(message == 'contact') {
     message = getContactMessage();
   } else if(message == 'weather') {
-    queryAPI(id, "https://api.worldweatheronline.com/premium/v1/weather.ashx?key=" + WEATHERKEY + "&q=" + IP + "&format=json", parseWeatherData);
+    queryAPI(id, "https://api.apixu.com/v1/current.json?key=" + WEATHERKEY + "&q=" + IP, parseWeatherData);
     return;
   } else if(message == 'about') {
     message = generateAbout();
@@ -378,24 +378,38 @@ function generateAbout() {
 // Weather
 
 function getASCIIWeather(data) {
-  var code = data.current_condition[0].weatherCode;
-  if(code == 113) {
+  var code = data.condition.code;
+
+  // Sunny
+  if(code == 1000) {
     return '   \\   /    \n     .-.     \n  ‒ (   ) ‒  \n     `-᾿     \n    /   \\    ';
-  } else if(code == 116 || code == 200 || code == 386) {
+  }
+  // Partly Cloudy
+  else if(code == 1003) {
     return '   \\        \n _ /\"\"\.-.    \n   \\_\(   ).  \n   /(___(__) ';
-  } else if(code == 119) {
+  }
+  // Cloudy
+  else if(code == 1006 || code == 1009) {
     return '     .--.    \n  .-(    ).  \n (___.__)__) ';
-  } else if(code == 122) {
-    return '     .--.    \n  .-(    ).  \n (___.__)__) ';
-  } else if(code == 143 || code == 248 || code == 260) {
+  }
+  // Mist
+  else if(code == 1030 || code == 1135 || code == 1147) {
     return  '_ - _ - _ - \n  _ - _ - _  \n _ - _ - _ - ';
-  } else if(code == 227 || code == 320 || code == 323 || code == 326 || code == 368) {
+  }
+  // Snow
+  else if(code == 1066 || code == 1114 || code == 1168 || code == 1210 || code == 1213 || code == 1261 || code == 1279) {
     return '     .-.     \n    (   ).   \n   (___(__)  \n    *  *  *  \n   *  *  *   ';
-  } else if(code == 230 || code == 329 || code == 332 || code == 338 || code == 335 || code == 371 || code == 395) {
+  }
+  // Blizard
+  else if(code == 1117 || code == 1171 || code == 1216 || code == 1219 || code == 1222 || code == 1225 || code == 1258 || code == 1264 || code == 1282) {
     return '     .-.     \n    (   ).   \n   (___(__)  \n   * * * *   \n  * * * *  ';
-  } else if(code == 226 || code ==  293|| code == 296 || code == 182 || code == 185 || code == 281 || code == 284 || code == 311 || code == 314 || code == 317 || code == 350 || code == 377 || code == 179 || code == 362 || code == 365 || code == 374 || code == 176 || code == 263) {
+  }
+  // Light rain
+  else if(code == 1063 || code == 1069 || code == 1072 || code == 1150 || code == 1153 || code == 1180 || code == 1183 || code == 1198 || code == 1204 || code == 1240 || code == 1249 || code == 1255 || code == 1273) {
     return '     .-.     \n    (   ).   \n   (___(__)  \n    ʻ ʻ ʻ ʻ  \n   ʻ ʻ ʻ ʻ  ';
-  } else if(code == 302 || code == 308 || code == 359 || code == 299 || code == 305 || code == 356 || code == 389 || code == 392) {
+  }
+  // Moderate rain
+  else if(code == 1087 || code == 1186 || code == 1189 || code == 1192 || code == 1195 || code == 1201 || code == 1207 || code == 1243 || code == 1252 || code == 1276) {
     return '    .-.     \n    (   ).   \n   (___(__)  \n  ‚ʻ‚ʻ‚ʻ‚ʻ   \n  ‚ʻ‚ʻ‚ʻ‚ʻ   ';
   } else {
     return '';
@@ -408,13 +422,13 @@ function parseWeatherData() {
     text = 'Sorry, couldn\'t get the data :(';
   } else {
     var result = JSON.parse(this.xhr.responseText);
-    var data = result.data;
+    var data = result.current;
 
     text = "Ok, here are the current weather conditions: ";
-    text += "It's currently <b>" + data.current_condition[0].weatherDesc[0].value + " and " + data.current_condition[0].temp_C + " °C </b>";
-    text += "with a wind speed of <b>" + data.current_condition[0].windspeedKmph + " " + data.current_condition[0].winddir16Point + " kmph. </b>";
-    if(Math.abs(data.current_condition[0].temp_C - data.current_condition[0].FeelsLikeC) > 3) {
-      text += "But it feels like <b>" + data.current_condition[0].FeelsLikeC + " °C. </b>";
+    text += "It's currently <b>" + data.condition.text + " and " + data.temp_c + " °C </b>";
+    text += "with a wind speed of <b>" + data.wind_kph + " " + data.wind_dir + " kmph. </b>";
+    if(Math.abs(data.temp_c - data.feelslike_c) > 3) {
+      text += "But it feels like <b>" + data.feelslike_c + " °C. </b>";
     }
     text += '<a class="weather" href="http://www.accuweather.com"><pre>' + getASCIIWeather(data) + '</pre></a>';
   }
