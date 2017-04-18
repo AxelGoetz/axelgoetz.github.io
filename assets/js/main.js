@@ -243,7 +243,7 @@ function getResponse() {
     message += "You can just send me something and I'll try to respond. Here are some topics that I know the answer to:";
     message += getHelpMessage();
   } else if(message == 'background') {
-    message = getBackgroundMessage();
+    message = getBackgroundMessage(result.result.parameters.color);
   } else if(message == 'contact') {
     message = getContactMessage();
   } else if(message == 'weather') {
@@ -347,10 +347,43 @@ function getHelpMessage() {
   return message;
 }
 
-function getBackgroundMessage() {
+function isValidTextColour(str) {
+    //Alter the following conditions according to your need.
+    if (str === "") { return false; }
+    if (str === "inherit") { return false; }
+    if (str === "transparent") { return false; }
+
+    var image = document.createElement("img");
+    image.style.color = "rgb(0, 0, 0)";
+    image.style.color = str;
+    if (image.style.color !== "rgb(0, 0, 0)") { return true; }
+    image.style.color = "rgb(255, 255, 255)";
+    image.style.color = str;
+    return image.style.color !== "rgb(255, 255, 255)";
+}
+
+/**
+ * Sets the background message if the color is not an empty string.
+ * @param  {String} color CSS color description
+ * @return {String}
+ */
+function getBackgroundMessage(color) {
   var message = '<div class="background">';
-  message += 'This background was a really short project of mine. It was inspired by <a href="http://vincentgarreau.com/particles.js/">particles.js</a> ';
-  message += 'and the <a href="https://deepmind.com/">Deepmind website</a>. If you\'re interested, you can find more info <a href="https://agoetz.me/projects/gravity-simulation">here</a>.</div>';
+  if(color === "") {
+    message += 'This background was a really short project of mine. It was inspired by <a href="http://vincentgarreau.com/particles.js/">particles.js</a> ';
+    message += 'and the <a href="https://deepmind.com/">Deepmind website</a>. If you\'re interested, you can find more info <a href="https://agoetz.me/projects/gravity-simulation">here</a>.</div>';
+  } else if(isValidTextColour(color)) {
+    message += 'Setting the background color to ' + color + '. ';
+    if(color === "white" || color === "#fff" || color === "#ffffff" || color === "rgb(255, 255, 255)" || color === "rgba(255, 255, 255, 1)") {
+      message += "Although I wouldn't recommend setting it to white since I know that it wouldn't look nice.";
+    }
+    message += "</div>";
+
+    document.getElementById("canvas").style.backgroundColor = color;
+    document.getElementById("chat-container").style.backgroundColor = color;
+  } else {
+    message += "That is not a valid color. </div>";
+  }
 
   return message;
 }
