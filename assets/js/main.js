@@ -263,6 +263,10 @@ function getResponse() {
     message = getDate();
   } else if(message == 'ip') {
     message = "Your public IP is: " + IP;
+  } else if(message == 'cv') {
+    message = getCV();
+  } else if(message == 'interests') {
+    message = getInterests();
   }
 
   updateText(this, message);
@@ -344,6 +348,26 @@ function getHelpMessage() {
   message += "<li>And many other features that you will probably never use.</li>";
   message += "<li>Finally, if you're ever lost, just ask for <strong>help</strong>.</li>";
   message += "</ul></div>";
+  return message;
+}
+
+function getCV() {
+  var message = '<div class="cv">';
+  message += 'Axel\'s CV is currently not publicly available but he might send you a copy if you contact him at ';
+  message += '<a href="mailto:contact@agoetz.me" class="mail">contact@agoetz.me</a>.</div>';
+
+  return message;
+}
+
+function getInterests() {
+  var message = '<div class="interests">';
+  message += 'Axel is interested in a variety of different fields. However he mainly focuses on:';
+  message += '<ul>';
+  message += '<li>AI (deep learning)</li>';
+  message += '<li>Computer Security (networking/cryptography)</li>';
+  message += '</ul>';
+  message += 'But in reality he is interested in any project as long as it provides a real challenge</div>';
+
   return message;
 }
 
