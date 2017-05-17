@@ -3,7 +3,7 @@ var IP = '';
 var map = {};
 var message = "";
 var chatContainer = document.getElementById('chat-container');
-var ACCESSTOKEN = 'e3fa11a3a2e34cdd91dc67dc7a947e56';
+var ACCESSTOKEN = '557fd3c271b34d259f84254699f1542b';
 var WEATHERKEY = '55ce69c2349a4ec3be4111427171202';
 var NEWSKEY = 'e512748454b04be5ba472a2dd7c1ab12';
 
