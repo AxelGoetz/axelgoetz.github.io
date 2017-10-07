@@ -424,9 +424,9 @@ function getContactMessage() {
 }
 
 function generateAbout() {
-  var message = '<div class="about">Axel is a third year BSc. Computer Science student at UCL.</br>';
-  message += 'He is currently working on his thesis <a href="https://github.com/AxelGoetz/website-fingerprinting">"Automatic Feature Selection for Website Fingerprinting"</a>, which studies the use of advanced deep learning techniques to automatically select persistent features spread across time.';
-  message += '</br></br>He was born in Belgium but raised in Burundi, Congo, Belgium and Dubai and currently lives in London.  </br></br>Now he spends most of time finishing his degree and working on side projects.</div>';
+  var message = '<div class="about">Axel is a software engineer at Bloomberg LP in London.</br>'
+  message += 'He graduated from UCL with a BSc. in Computer Science.</br>';
+  message += '</br>He was born in Belgium but raised in Burundi, Congo, Belgium and Dubai and currently lives in London.</div>';
 
   return message;
 }
