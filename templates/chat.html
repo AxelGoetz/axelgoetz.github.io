@@ -1,3 +1,6 @@
+{% extends "default.html" %}
+
+{% block body %}
 <style>
   html, body {
     overflow: hidden;
@@ -6,14 +9,14 @@
 <div class="container">
   <div class="header">
     <div class="user">
-      <img src="{{ "/assets/images/favicon.png" | prepend: site.baseurl }}" alt="Profile Picture" style="background-color: #fff">
+      <img src="{{ url_for("static", filename="/images/favicon.png") }}" alt="Profile Picture" style="background-color: #fff">
       <div class="user-info">
         <span class="username">Axel's Personal Assistant</span>
         <span id="last-seen">last seen today at 16.42</span>
       </div>
     </div>
     <div class="center-vertically">
-      {% include dropdown.html %}
+      {% include "dropdown.html" %}
     </div>
   </div>
   <div id="chat-container">
@@ -32,8 +35,9 @@
   </div>
 </div>
 <div id="modals">
-  {% include credits.html %}
-  {% include help.html %}
-  {% include website-info.html %}
+  {% include "credits.html" %}
+  {% include "help.html" %}
+  {% include "website-info.html" %}
 </div>
 <canvas id="canvas"></canvas>
+{% endblock %}

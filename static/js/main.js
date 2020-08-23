@@ -3,9 +3,8 @@ var IP = '';
 var map = {};
 var message = "";
 var chatContainer = document.getElementById('chat-container');
-var ACCESSTOKEN = '557fd3c271b34d259f84254699f1542b';
-var WEATHERKEY = '55ce69c2349a4ec3be4111427171202';
-var NEWSKEY = 'e512748454b04be5ba472a2dd7c1ab12';
+var NEWSKEY = '5fe9ca2161c54014afccce0fecbfff17';
+var SESSION_ID = Math.random().toString(36).substr(2, 9);
 
 window.onload = function() { initChat(); };
 initGravity();
@@ -236,7 +235,7 @@ function animateLoading(id) {
 
 function getResponse() {
   var result = JSON.parse(this.xhr.responseText);
-  var message = result.result.fulfillment.speech;
+  var message = result.response;
 
   if(message == "help") {
     message = "Are you lost? No worries I'll help!</br>";
@@ -247,16 +246,15 @@ function getResponse() {
   } else if(message == 'contact') {
     message = getContactMessage();
   } else if(message == 'weather') {
-    queryAPI(id, "https://api.apixu.com/v1/current.json?key=" + WEATHERKEY + "&q=" + IP, parseWeatherData);
+    queryAPI(id, "/weather?query=" + IP, parseWeatherData);
     return;
   } else if(message == 'about') {
     message = generateAbout();
   } else if(message == 'news') {
-    queryAPI(id, 'https://newsapi.org/v1/articles?source=techcrunch&apiKey=' + NEWSKEY, parseNewsData);
+    queryAPI(id, 'https://newsapi.org/v2/top-headlines?category=business&country=gb&apiKey=' + NEWSKEY, parseNewsData);
     return;
   } else if(message == 'projects') {
-    queryAPI(id, '/data/projects.json', parseProjectsData);
-    return;
+    message = getProjectText();
   } else if(message == 'time') {
     message = getTime();
   } else if(message == 'date') {
@@ -282,14 +280,13 @@ function setResponse(text) {
 // Query API
 
 function sendQuery(text, id) {
-  var url = "https://api.api.ai/v1/query?v=20150910";
-  var xhr = createQuery("POST", url);
+  var url = "/detect-intent?text=" + encodeURI(text) + "&session_id=" + SESSION_ID;
+  var xhr = createQuery("GET", url);
   if (!xhr) {
     failedQuery.call(this);
     return;
   }
 
-  xhr.setRequestHeader("Authorization", "Bearer " + ACCESSTOKEN);
   xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 
   this.xhr = xhr;
@@ -299,10 +296,7 @@ function sendQuery(text, id) {
   xhr.onerror = failedQuery.bind(this);
   xhr.ontimeout = failedQuery.bind(this);
 
-  var json = '{"query": "' + text + '",';
-  json += '"lang": "en", "sessionId": "1234567890"}';
-
-  xhr.send(json);
+  xhr.send();
 }
 
 function createQuery(method, url) {
@@ -363,8 +357,8 @@ function getInterests() {
   var message = '<div class="interests">';
   message += 'Axel is interested in a variety of different fields. However he mainly focuses on:';
   message += '<ul>';
-  message += '<li>AI (deep learning)</li>';
-  message += '<li>Computer Security (networking/cryptography)</li>';
+  message += '<li>New technologies</li>';
+  message += '<li>Systematic Trading</li>';
   message += '</ul>';
   message += 'But in reality he is interested in any project as long as it provides a real challenge</div>';
 
@@ -424,7 +418,7 @@ function getContactMessage() {
 }
 
 function generateAbout() {
-  var message = '<div class="about">Axel is a software engineer at Bloomberg LP in London.</br>'
+  var message = '<div class="about">Axel is a quantative developer at Millennium Partners.</br>'
   message += 'He graduated from UCL with a BSc. in Computer Science.</br>';
   message += '</br>He was born in Belgium but raised in Burundi, Congo, Belgium and Dubai and currently lives in London.</div>';
 
@@ -433,45 +427,6 @@ function generateAbout() {
 
 // ---------------------------------------
 // Weather
-
-function getASCIIWeather(data) {
-  var code = data.condition.code;
-
-  // Sunny
-  if(code == 1000) {
-    return '   \\   /    \n     .-.     \n  ‒ (   ) ‒  \n     `-᾿     \n    /   \\    ';
-  }
-  // Partly Cloudy
-  else if(code == 1003) {
-    return '   \\        \n _ /\"\"\.-.    \n   \\_\(   ).  \n   /(___(__) ';
-  }
-  // Cloudy
-  else if(code == 1006 || code == 1009) {
-    return '     .--.    \n  .-(    ).  \n (___.__)__) ';
-  }
-  // Mist
-  else if(code == 1030 || code == 1135 || code == 1147) {
-    return  '_ - _ - _ - \n  _ - _ - _  \n _ - _ - _ - ';
-  }
-  // Snow
-  else if(code == 1066 || code == 1114 || code == 1168 || code == 1210 || code == 1213 || code == 1261 || code == 1279) {
-    return '     .-.     \n    (   ).   \n   (___(__)  \n    *  *  *  \n   *  *  *   ';
-  }
-  // Blizard
-  else if(code == 1117 || code == 1171 || code == 1216 || code == 1219 || code == 1222 || code == 1225 || code == 1258 || code == 1264 || code == 1282) {
-    return '     .-.     \n    (   ).   \n   (___(__)  \n   * * * *   \n  * * * *  ';
-  }
-  // Light rain
-  else if(code == 1063 || code == 1069 || code == 1072 || code == 1150 || code == 1153 || code == 1180 || code == 1183 || code == 1198 || code == 1204 || code == 1240 || code == 1249 || code == 1255 || code == 1273) {
-    return '     .-.     \n    (   ).   \n   (___(__)  \n    ʻ ʻ ʻ ʻ  \n   ʻ ʻ ʻ ʻ  ';
-  }
-  // Moderate rain
-  else if(code == 1087 || code == 1186 || code == 1189 || code == 1192 || code == 1195 || code == 1201 || code == 1207 || code == 1243 || code == 1252 || code == 1276) {
-    return '    .-.     \n    (   ).   \n   (___(__)  \n  ‚ʻ‚ʻ‚ʻ‚ʻ   \n  ‚ʻ‚ʻ‚ʻ‚ʻ   ';
-  } else {
-    return '';
-  }
-}
 
 function parseWeatherData() {
   var text = '';
@@ -482,12 +437,11 @@ function parseWeatherData() {
     var data = result.current;
 
     text = "Ok, here are the current weather conditions: ";
-    text += "It's currently <b>" + data.condition.text + " and " + data.temp_c + " °C </b>";
-    text += "with a wind speed of <b>" + data.wind_kph + " " + data.wind_dir + " kmph. </b>";
-    if(Math.abs(data.temp_c - data.feelslike_c) > 3) {
-      text += "But it feels like <b>" + data.feelslike_c + " °C. </b>";
+    text += "It's currently <b>" + data.weather_descriptions[0] + " and " + data.temperature + " °C </b>";
+    text += "with a wind speed of <b>" + data.wind_speed + " " + data.wind_dir + " kmph. </b>";
+    if(Math.abs(data.temperature - data.feelslike) > 3) {
+      text += "But it feels like <b>" + data.feelslike + " °C. </b>";
     }
-    text += '<a class="weather" href="http://www.accuweather.com"><pre>' + getASCIIWeather(data) + '</pre></a>';
   }
 
   updateText(this, text);
@@ -617,26 +571,6 @@ function checkText(text) {
   return text;
 }
 
-// ---------------------------------------
-// Projects
-
-function parseProjectsData() {
-  var result = JSON.parse(this.xhr.responseText);
-  result = result.data;
-  var text = "Here are some of Axel's projects:<ul class='projects-chat'>";
-
-  for(var i = 0; i < result.length; i++) {
-    text += '<li><a href="/projects/' + result[i].project_id + '/">' + result[i].title + '</a>';
-    if(result[i].demo_link !== undefined) {
-      text += '<a href="' + result[i].demo_link + '"><i class="fa fa-globe" aria-hidden="true"></i></a>';
-    } else {
-      text += '<i class="fa fa-github" style="color: rgba(0, 0, 0, 0); cursor: auto" aria-hidden="true"></i>';
-    }
-    text += '<a href="' + result[i].github_link + '"><i class="fa fa-github" aria-hidden="true"></i></a>';
-    text += '</li>';
-  }
-  text += '</ul>';
-  text += 'For more cool projects, checkout my <a href="https://github.com/AxelGoetz">Github</a>.';
-
-  updateText(this, text);
+function getProjectText() {
+  return 'A list of some of my (old) open-source projects can be found on my <a href="https://github.com/AxelGoetz">Github</a>.';
 }

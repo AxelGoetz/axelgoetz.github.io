@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 
     <title>
-      {% if page.title and page.title != 'Index' %}
-        {{ page.title }} -
+      {% if title and title != 'Index' %}
+        {{ title }} -
       {% endif %}
       {{ site.title }}
     </title>
@@ -15,16 +15,14 @@
     <meta name="author" content="{{ site.author }}">
     <meta name="description" content="Axel Goetz' personal website to display basic information such who is is, projects he's working on and links to social media in a conversational way."/>
 
-    <meta property="og:site_name" content="{{ site.title }}">
+   <meta property="og:site_name" content="{{ site.title }}">
    <meta property="og:type" content="website">
-   <meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
    <meta property="og:title" content="Axel Goetz">
    <meta property="og:description" content="{{ site.description }}">
-   {% if page.image %}<meta property="og:image" content="{{ page.image | prepend: site.baseurl | prepend: site.url }}">{% endif %}
    <meta property="article:publisher" content="{{ site.facebook_url }}">
 
-    <link rel="shortcut icon" href="{{ "/assets/images/favicon.png" | prepend: site.baseurl }}">
-    <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl }}">
+    <link rel="shortcut icon" href="{{ url_for("static", filename="/images/favicon.png") }}">
+    <link rel="stylesheet" href="{{ url_for("static", filename="/css/main.css") }}">
     <link async rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link async href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
 
@@ -41,13 +39,13 @@
 
   <body>
     <div class="content">
-       {{ content }}
+      {% block body %}{% endblock %}
     </div>
   </body>
 
-  {% if page.title == 'Index' %}
-    <script type="text/javascript" src="{{ "/assets/js/gravity.min.js" | prepend: site.baseurl }}"></script>
-    <script type="text/javascript" src="{{ "/assets/js/main.js" | prepend: site.baseurl }}"></script>
+  {% if title == 'Index' %}
+    <script type="text/javascript" src="{{ url_for("static", filename="/js/gravity.min.js") }}"></script>
+    <script type="text/javascript" src="{{ url_for("static", filename="/js/main.js") }}"></script>
     <script src="https://api.ipify.org?format=jsonp&callback=setIP"></script>
   {% endif %}
 </html>

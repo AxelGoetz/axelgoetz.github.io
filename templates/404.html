@@ -1,0 +1,9 @@
+{% extends "project.html" %}
+
+{% block content %}
+<h3>
+  Sorry, this page doesn't exist :(
+</h3>
+<h4><a href="/">Take me back to the homepage</a></h4>
+<img src="{{ url_for("static", filename="/images/404.png") }}" alt="404 venn diagram" style="width: 80%; display: block; margin: 0 auto;">
+{% endblock %}

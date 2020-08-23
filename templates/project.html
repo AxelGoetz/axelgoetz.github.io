@@ -1,0 +1,27 @@
+{% extends "default.html" %}
+
+{% block body %}
+<div class="wrapper">
+  {% include "header.html" %}
+
+  <div class="website-wrapper">
+    {% if demo_link is defined %}
+    <iframe class="demo-iframe" src="{{ demo_link }}"></iframe>
+    {% if iframe_explanation is defined %}
+    <div class="iframe-explanation">{{ iframe_explanation }}</div>
+    {% endif %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    {% if demo_link is defined %}
+    <div>If you want to see the demo in full size, click <a href="{{ demo_link }}">here</a>.</div>
+    {% endif %}
+    {% if github_link is defined %}
+    <div>The project can also be found on Github <a href="{{ github_link }}">here</a>.</div>
+    {% endif %}
+  </div>
+
+  {% include "footer.html" %}  
+</div>
+{% endblock %}
